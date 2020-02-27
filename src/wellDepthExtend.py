@@ -56,6 +56,12 @@ def dog_leg_severity(md, inc, az):
     + (np.sin(inc1) * np.sin(inc2)) * np.cos(az2 - az1))) * (30 / mdStep))
     return dls
 
+def minimum_curvature():
+    """This function corrects wellbore deviation using the minimum curvature method
+    Returns a numpy 1d array
+    """
+    pass
+
 def reference_curves(dev_surv, start_depth=0, kb=32, stop_depth=10000, inc=0.5, units='m'):
     """This function builds uniformly spaced depth reference curves
     Assumes dev_surv a pandas dataframe
