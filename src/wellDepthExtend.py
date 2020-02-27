@@ -36,8 +36,15 @@ def read_dev_surv(dev_surv_file):
 
 def reference_curves(dev_surv, start_depth=0, kb=32, stop_depth=10000, inc=5, units='ft'):
     """This function builds uniformly spaced depth reference curves
-    Defaults start_depth, kb, stop_depth, inc, and units
     Assumes dev_surv a pandas dataframe
+    Defaults start_depth, kb, stop_depth, inc, and units
+    Returns a pandas dataframe
+    """
+    pass
+
+def reindex_curves(original_curves, reference_curves):
+    """This function merges the original curves with the reference curves
+    Assumes original_curves, reference_curves a pandas dataframe
     Returns a pandas dataframe
     """
     pass
