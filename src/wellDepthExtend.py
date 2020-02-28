@@ -99,7 +99,7 @@ def minimum_curvature(md, inc, dls):
     dogLegSev = np.deg2rad(np.divide(dls[1:], np.divide(30., (md2 - md1))))
     # note: we are dividing out a factor multiplied in dog_leg_severity
     # calculate curvature factor
-    cF = np.zeros(len(md))
+    cF = np.zeros(len(md[1:]))
     cF[dogLegSev > 0] = np.divide(2., np.multiply(dogLegSev, np.tan(np.divide(dogLegSev, 2.))))
     cF[dogLegSev <= 0] = 1
     # calculate TVD
