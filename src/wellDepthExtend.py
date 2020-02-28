@@ -47,7 +47,7 @@ def dog_leg_severity(md, inc, az):
     az (ndarray-like): Wellbore azimuth
 
     Returns:
-    numpy array
+    ndarray: Dog Leg Severity
     """
     # initialize an empty numpy array for Dog Leg Severity
     dls = np.zeros(len(md))
@@ -72,10 +72,45 @@ def dog_leg_severity(md, inc, az):
     dls[1:] = e
     return dls
 
-def minimum_curvature():
+def minimum_curvature(md, inc, dls):
     """This function corrects wellbore deviation using the minimum curvature method
-    Returns a numpy 1d array
+    
+    Parameters:
+    md (ndarray-like): Measured Depth
+    inc (ndarray-like): Wellbore Inclination
+    dls (ndarray-like): Dog Leg Severity
+
+    Returns:
+    ndarry: True Vertical Depth
     """
+    # initialize an empty numpy array for TVD
+    tvd = np.zeros(len(md))
+    # hard code the TVD of the first sample to be zero
+    tvd[0] = 0.0
+    # create md1, md2 arrays offset by 1 index
+    md1 = md[0:-1]
+    md2 = md[1:]
+    md2.reset_index(drop=True, inplace=True)
+    # create inc1, inc2 arrays offset by 1 index
+    inc1 = np.deg2rad(inc[0:-1])
+    inc2 = np.deg2rad(inc[1:])
+    inc2.reset_index(drop=True, inplace=True)
+    # calculate dog leg severity
+    dogLegSev = np.deg2rad(np.divide(dls[1:], np.divide(30., (md2 - md1))))
+    # note: we are dividing out a factor multiplied in dog_leg_severity
+    # calculate curvature factor
+    cF = np.zeros(len(md))
+    cF[dogLegSev > 0] = np.divide(2., np.multiply(dogLegSev, np.tan(np.divide(dogLegSev, 2.))))
+    cF[dogLegSev <= 0] = 1
+    # calculate TVD
+    a = md2 - md1
+    b = np.cos(inc2) + np.cos(inc1)
+    c = np.multiply(a, b)
+    d = np.divide(c, 2.)
+    e = np.multiply(d, cF)
+    tvd[1:] = np.cumsum(e)
+    return tvd
+
     pass
 
 def reference_curves(dev_surv, start_depth=0, kb=32, stop_depth=10000, inc=0.5, units='m'):
