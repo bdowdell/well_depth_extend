@@ -13,7 +13,7 @@ def get_file_list(path=os.getcwd()):
     path (string): The directory path for the well files
 
     Returns:
-    
+
     list: list of files in specified directory
     """
     return os.listdir(path)
@@ -120,8 +120,6 @@ def minimum_curvature(md, inc, dls):
     e = np.multiply(d, cF)
     tvd[1:] = np.cumsum(e)
     return tvd
-
-    pass
 
 def reference_curves(dev_surv, start_depth=0, kb=32, stop_depth=10000, inc=0.5, units='m'):
     """This function builds uniformly spaced depth reference curves
