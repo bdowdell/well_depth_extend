@@ -9,9 +9,11 @@ def get_file_list(path=os.getcwd()):
     Gets a listing of well files in a specified directory
 
     Parameters:
+
     path (string): The directory path for the well files
 
     Returns:
+    
     list: list of files in specified directory
     """
     return os.listdir(path)
@@ -42,11 +44,15 @@ def dog_leg_severity(md, inc, az):
     """Calculates the dog leg severity as input to minimum curvature for TVD correction
 
     Parameters:
+
     md (ndarray-like): Measured Depth
+
     inc (ndarray-like): Wellbore inclination
+
     az (ndarray-like): Wellbore azimuth
 
     Returns:
+
     ndarray: Dog Leg Severity
     """
     # initialize an empty numpy array for Dog Leg Severity
@@ -76,11 +82,15 @@ def minimum_curvature(md, inc, dls):
     """This function corrects wellbore deviation using the minimum curvature method
     
     Parameters:
+
     md (ndarray-like): Measured Depth
+
     inc (ndarray-like): Wellbore Inclination
+
     dls (ndarray-like): Dog Leg Severity
 
     Returns:
+
     ndarry: True Vertical Depth
     """
     # initialize an empty numpy array for TVD
