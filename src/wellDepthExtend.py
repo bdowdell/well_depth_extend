@@ -5,10 +5,14 @@ import pandas as pd
 import numpy as np
 
 def get_file_list(path=os.getcwd()):
-    """This function returns the contents of a given directory
-    Assumes path a string
-    Defaults path to be current working directory
-    Returns a list
+    """
+    Gets a listing of well files in a specified directory
+
+    Parameters:
+    path (string): The directory path for the well files
+
+    Returns:
+    list: list of files in specified directory
     """
     return os.listdir(path)
 
@@ -35,9 +39,15 @@ def read_dev_surv(dev_surv_file):
     pass
 
 def dog_leg_severity(md, inc, az):
-    """Assumes md, inc, and az are pandas series or numpy 1d array
-    Calculates Dog Leg Severity
-    Returns a numpy 1d array
+    """Calculates the dog leg severity as input to minimum curvature for TVD correction
+
+    Parameters:
+    md (ndarray-like): Measured Depth
+    inc (ndarray-like): Wellbore inclination
+    az (ndarray-like): Wellbore azimuth
+
+    Returns:
+    numpy array
     """
     # initialize an empty numpy array for Dog Leg Severity
     dls = np.zeros(len(md))
