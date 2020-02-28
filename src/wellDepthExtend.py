@@ -44,16 +44,22 @@ def dog_leg_severity(md, inc, az):
     # hard code the dog leg severity to be zero at the first sample
     dls[0]= 0
     # calculate measured depth increment, skipping the first sample
-    mdStep = np.diff(md[1:], n=1)
+    mdStep = np.diff(md, n=1)
     # create inc1, inc2 arrays offset by 1 index
     inc1 = np.deg2rad(inc[0:-1])
     inc2 = np.deg2rad(inc[1:])
+    inc2.reset_index(drop=True, inplace=True)
     # create az1, az2 arrays offset by 1 index
     az1 = np.deg2rad(az[0:-1])
     az2 = np.deg2rad(az[1:])
+    az2.reset_index(drop=True, inplace=True)
     # compute dog leg severity
-    dls[1:] = (np.rad2deg(np.arccos((np.cos(inc1) * np.cos(inc2))
-    + (np.sin(inc1) * np.sin(inc2)) * np.cos(az2 - az1))) * (30 / mdStep))
+    a = np.multiply(np.cos(inc1), np.cos(inc2))
+    b = np.multiply(np.sin(inc1), np.sin(inc2))
+    c = np.multiply(b, np.cos(az2 - az1))
+    d = np.rad2deg(np.arccos(a + c))
+    e = np.multiply(d, np.divide(30., mdStep))
+    dls[1:] = e
     return dls
 
 def minimum_curvature():
