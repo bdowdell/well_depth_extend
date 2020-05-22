@@ -3,6 +3,7 @@
 import os
 import pandas as pd
 import numpy as np
+from bisect import bisect_left
 
 def get_file_list(path=os.getcwd()):
     """
@@ -135,6 +136,24 @@ def minimum_curvature(md, inc, dl, tvd0):
     d = np.multiply(a, c)
     tvd[1:] = np.cumsum(d) + tvd0
     return tvd
+
+def getClosestValues(myList, myNumber):
+    """
+    Assumes myList is sorted. Returns closest value to myNumber.
+
+    If two numbers are equally close, return the smallest number.
+    """
+    pos = bisect_left(myList, myNumber)
+    if pos == 0:
+        return myList[0]
+    if pos == len(myList):
+        return myList[-1]
+    before = myList[pos - 1]
+    after = myList[pos]
+    if after - myNumber < myNumber - before:
+        return after
+    else:
+        return before
 
 def reference_curves(dev_surv, start_depth=0, kb=32, stop_depth=10000, inc=0.5, units='m'):
     """This function builds uniformly spaced depth reference curves
