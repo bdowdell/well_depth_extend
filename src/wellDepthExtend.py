@@ -155,13 +155,20 @@ def getClosestValues(myList, myNumber):
     else:
         return before
 
-def reference_curves(dev_surv, start_depth=0, kb=32, stop_depth=10000, inc=0.5, units='m'):
+def uniform_md(start_depth=0, kb=32, stop_depth=10000, inc=0.5, units='ft'):
     """This function builds uniformly spaced depth reference curves
-    Assumes dev_surv a pandas dataframe
     Defaults start_depth, kb, stop_depth, inc, and units
     Returns a pandas series
     """
-    pass
+    # calcuate how many samples are needed for max TD
+    size = int(round(stop_depth, 1)) + 1
+    md = list()
+    for i in range(0, size * 10000, int(inc * 10000)):
+        md.append(float(i) / 10000)
+    
+    # create a dataframe for the uniform md
+    return pd.DataFrame({'MD':md})
+
 
 def reindex_curves(original_curves, reference_curves):
     """This function merges the original curves with the reference curves
